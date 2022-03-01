@@ -15,7 +15,7 @@ import com.example.demo.db.entity.Person;
 @Repository
 public class personJdbcDao {
 @Autowired	
-JdbcTemplate jdbc;
+JdbcTemplate jdbctemplate;
 class personRowMapper implements RowMapper<Person>{
 	@Override
 	public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -28,20 +28,20 @@ class personRowMapper implements RowMapper<Person>{
 	}
 }
 public List<Person> findAll(){
-	return jdbc.query("select * from person",new personRowMapper());
+	return jdbctemplate.query("select * from person",new personRowMapper());
 }
 public Person findById(int id){
-	return jdbc.queryForObject("select * from person where id=?",new Object [] {id},new BeanPropertyRowMapper<Person>(Person.class));
+	return jdbctemplate.queryForObject("select * from person where id=?",new Object [] {id},new BeanPropertyRowMapper<Person>(Person.class));
 }
 public int deleteById(int id){
-	return jdbc.update("delete from person where id=?",new Object [] {id});
+	return jdbctemplate.update("delete from person where id=?",new Object [] {id});
 }
 public int insert(Person person){
-	return jdbc.update("insert into person(id,name,location,birth_date)values(?,?,?,?)",
+	return jdbctemplate.update("insert into person(id,name,location,birth_date)values(?,?,?,?)",
 			new Object [] {person.getId(),person.getName(),person.getLocation(),new Timestamp(person.getBirthDate().getTime())});
 }
 public int update(Person person){
-	return jdbc.update("update person set name=?,location=?,birth_date=? where id=?",
+	return jdbctemplate.update("update person set name=?,location=?,birth_date=? where id=?",
 			new Object [] {person.getName(),person.getLocation(),new Timestamp(person.getBirthDate().getTime()),person.getId()});
 }
 

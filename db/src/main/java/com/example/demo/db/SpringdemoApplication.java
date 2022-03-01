@@ -12,21 +12,22 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.example.demo.db.jdbc.personJdbcDao;
 import com.example.demo.db.entity.Person;
 
-@SpringBootApplication
-public class DbApplication implements CommandLineRunner{
+//@SpringBootApplication
+public class SpringdemoApplication implements CommandLineRunner{
 private Logger logger=LoggerFactory.getLogger(this.getClass());
 @Autowired
 personJdbcDao dao;
 	public static void main(String[] args) {
-		SpringApplication.run(DbApplication.class, args);
+		SpringApplication.run(SpringdemoApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		logger.info("All users-> {}",dao.findAll());
 		logger.info("User id 10001 -> {}",dao.findById(10001));
+		logger.info("Deleting 10002 -> No.of rows deleted -> {}",dao.deleteById(10002));
 		logger.info("Inserting id 10004 -> {}",dao.insert(new Person(10004,"Tara","Berlin",new Date())));
-		logger.info("Updating id 10003 -> {}",dao.update(new Person(10003,"Peter","Barcelona",new Date())));
+		logger.info("Updating id 10003 -> {}",dao.update(new Person(10003,"Peter","Utrecht",new Date())));
 		
 	}
 
